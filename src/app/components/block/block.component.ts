@@ -33,8 +33,8 @@ export class BlockComponent implements OnInit {
     // also http://blog.peramid.es/blog/2014/09/09/short-introduction-to-sjcl/
     let data = String(this.blockid);
     data += String(this.nonce);
-    data += this.content;
-    data += this.prev_block;
+    data += this.content ? this.content : "";
+    data += this.prev_block ? this.prev_block : "";
     return data;
   }
 
