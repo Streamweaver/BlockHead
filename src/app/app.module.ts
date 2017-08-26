@@ -4,19 +4,24 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BlockComponent } from './components/block/block.component';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './components/nav/nav.component';
+import { BlockchainComponent } from './components/blockchain/blockchain.component';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     BlockComponent,
-    NavComponent
+    NavComponent,
+    BlockchainComponent
   ],
   imports: [
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

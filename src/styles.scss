@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'variables';
-@import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import 'scss/variables';
+@import 'scss/myvariables';
 
-
-
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import 'scss/bootswatch';
+@import '../node_modules/font-awesome/scss/font-awesome';
