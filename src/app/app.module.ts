@@ -5,15 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BlockComponent } from './components/block/block.component';
 import { NavComponent } from './components/nav/nav.component';
-import { BlockchainComponent } from './components/blockchain/blockchain.component';
 import { DataService } from './services/data.service';
+import { BlockMinerComponent } from './components/block-miner/block-miner.component';
+import { BlockChainComponent } from './components/block-chain/block-chain.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BlockComponent,
     NavComponent,
-    BlockchainComponent
+    BlockMinerComponent,
+    BlockChainComponent,
   ],
   imports: [
     BrowserModule,

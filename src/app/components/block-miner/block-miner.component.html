@@ -1,0 +1,25 @@
+<div class="col-md-5 bg-faded">
+<form (submit)="onBlockSubmit()">
+    <div class="form-group">
+      <label class="form-control-label">ID</label>
+      <input class="form-control" type="number" [(ngModel)]="data.id" name="id" id="id" #name="ngModel">
+    </div>
+  <div class="form-group">
+    <label class="form-control-label">Nonce</label>
+    <input class="form-control" type="number" [(ngModel)]="data.nonce" name="nonce" id="nonce" #name="ngModel">
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Data</label>
+    <textarea class="form-control" type="number" [(ngModel)]="data.body" name="body" id="body" #name="ngModel"></textarea>
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Prev</label>
+    <input class="form-control" type="number" [(ngModel)]="data.prev" name="prev" id="prev" #name="ngModel">
+  </div>
+  <div class="form-group">
+    <label class="form-control-label">Hash</label>
+    <input class="form-control" type="number" [(ngModel)]="data.hash" name="hash" id="hash" #name="ngModel">
+  </div>
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
+</div>
