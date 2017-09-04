@@ -1,0 +1,26 @@
+<h1>Crypto Keys</h1>
+<div class="row">
+  <button class="btn btn-primary" (click)="clickNewKeypair()">Generate Keys</button>
+</div>
+<div class="row">
+  <div class="card col-md-6">
+    <div class="card-block">
+      <div class="card-title">
+        Private Key (Secure)
+      </div>
+      <div class="card-text">
+        {{ secKey }}
+      </div>
+    </div>
+  </div>
+  <div class="card col-md-6">
+    <div class="card-block">
+      <div class="card-title">
+        Public Key (Shared)
+      </div>
+      <div class="card-text">
+        {{ pubKey }}
+      </div>
+    </div>
+  </div>
+</div>

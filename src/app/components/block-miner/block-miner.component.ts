@@ -28,8 +28,9 @@ export class BlockMinerComponent implements OnInit {
       nonce: this._getRandomInt(0, 100000),
       body: '',
       prev: this.prev_hash,
-      hash: this._getHash()
+      hash: ''
     };
+    this.blockData.hash = this._getHash();
   }
 
   isValid(): boolean {
@@ -42,7 +43,7 @@ export class BlockMinerComponent implements OnInit {
   }
 
   diagnostic(): string {
-    return JSON.stringify(this.blockData);
+    return this._stringifyBlockData();
   }
 
   /* Gets a random int inclusive of range of min to max */
@@ -52,9 +53,16 @@ export class BlockMinerComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  /* Returns block data elements as a concatinated string */
+  private _stringifyBlockData(): string {
+    const data: string = this.blockData.id + this.blockData.nonce + this.blockData.body + this.blockData.prev;
+    console.log(data);
+    return data;
+  }
+
   /* Gets the Hash Value of the block blockData */
   private _getHash(): string {
-    const hash = sjcl.hash.sha256.hash('this is my test string');
+    const hash = sjcl.hash.sha256.hash(this._stringifyBlockData());
     return sjcl.codec.hex.fromBits(hash);
   }
 
