@@ -4,14 +4,15 @@ import { BlockData } from '../models/block-data';
 @Injectable()
 export class DataService {
 
-  blocks: BlockData[];
+  blockChain: BlockData[];
+
   constructor() { }
 
   getBlocks() {
-    console.log('Implement getBlocks');
+    return this.blockChain;
   }
 
-  addBlock(data) {
-    console.log('Impleent addBlocks');
+  addBlock(data: BlockData) {
+    this.blockChain.push(data);
   }
 }

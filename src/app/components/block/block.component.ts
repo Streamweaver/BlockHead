@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockData } from '../../models/block-data';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-block',
@@ -7,7 +8,7 @@ import { BlockData } from '../../models/block-data';
   styleUrls: ['./block.component.scss']
 })
 export class BlockComponent implements OnInit {
-  data: BlockData;
+  @Input('blockData') blockData: BlockData;
 
   constructor() {}
 

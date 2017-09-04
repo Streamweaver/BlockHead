@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockData } from '../../models/block-data';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-block-chain',
@@ -8,12 +9,14 @@ import { BlockData } from '../../models/block-data';
 })
 export class BlockChainComponent implements OnInit {
 
-  blocks: BlockData[];
+  blockChain: BlockData[];
 
-  constructor() { }
+  constructor(
+    private dataService: DataService
+  ) { }
 
   ngOnInit() {
-    this.blocks = [];
+    this.blockChain = this.dataService.getBlocks();
   }
 
 }

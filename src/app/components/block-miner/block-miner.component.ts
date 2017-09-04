@@ -10,18 +10,23 @@ import { BlockData } from '../../models/block-data';
 export class BlockMinerComponent implements OnInit {
   next_id: number;
   prev_hash: string;
-  data: BlockData;
+  blockData: BlockData;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.next_id = 0;
-    this.data = {
+    this.nextBlock();
+  }
+
+  nextBlock() {
+    this.next_id = (this.next_id) ? this.next_id++ : 1;
+    this.prev_hash = (this.blockData) ? this.blockData.hash : '000000000';
+    this.blockData = {
       id: this.next_id,
-      nonce: 1000,
+      nonce: this._getRandomInt(0, 100000),
       body: '',
-      prev: '',
-      hash: ''
+      prev: this.prev_hash,
+      hash: this._getHash()
     };
   }
 
@@ -30,6 +35,24 @@ export class BlockMinerComponent implements OnInit {
   }
 
   onBlockSubmit() {
-    this.dataService.addBlock(this.data);
+    this.dataService.addBlock(this.blockData);
+    this.nextBlock();
   }
+
+  diagnostic(): string {
+    return JSON.stringify(this.blockData);
+  }
+
+  /* Gets a random int inclusive of range of min to max */
+  private _getRandomInt(min, max): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  /* Gets the Hash Value of the block blockData */
+  private _getHash(): string {
+    return 'Implement _getHash';
+  }
+
 }
