@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { BlockData } from '../../models/block-data';
+import * as sjcl from 'sjcl';
+
 
 @Component({
   selector: 'app-block-miner',
@@ -52,7 +54,8 @@ export class BlockMinerComponent implements OnInit {
 
   /* Gets the Hash Value of the block blockData */
   private _getHash(): string {
-    return 'Implement _getHash';
+    const hash = sjcl.hash.sha256.hash('this is my test string');
+    return sjcl.codec.hex.fromBits(hash);
   }
 
 }
