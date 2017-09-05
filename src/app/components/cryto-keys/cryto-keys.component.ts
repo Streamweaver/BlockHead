@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as sjcl from 'sjcl';
-import * as keypair from 'keypair';
-
-// Promosing simple example library
-// https://github.com/wwwtyro/cryptico
-
-
-// Keypair library https://github.com/juliangruber/keypair
 
 // Some examples of encoding
 /* Key examples and code pulled form sjcl wiki at
@@ -19,6 +12,7 @@ import * as keypair from 'keypair';
   styleUrls: ['./cryto-keys.component.scss']
 })
 export class CrytoKeysComponent implements OnInit {
+  keyPair: any;
   pubKey: string;
   secKey: string;
 
@@ -31,10 +25,19 @@ export class CrytoKeysComponent implements OnInit {
 
 
   clickNewKeypair() {
-    // sjcl.ecc.elGamal.generateKeys(256)
-    const keyPair = keypair();
-    this.pubKey = keyPair['public'];
-    this.secKey = keyPair['private'];
+    const keyPair = sjcl.ecc.elGamal.generateKeys(256, 10);
+    const pub = keyPair.pub.get();
+    const sec = keyPair.sec.get();
+    this.pubKey = sjcl.codec.base64.fromBits(pub.x.concat(pub.y));
+    this.secKey = sjcl.codec.base64.fromBits(sec);
 
+  }
+
+  getPub() {
+    return this.keyPair.pub.get();
+  }
+
+  getSec() {
+    return this.keyPair.sec.get();
   }
 }

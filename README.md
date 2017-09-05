@@ -10,12 +10,22 @@ I am using this library to compute various hashes and for other crypto functions
 
 Some notes on installing and uisng this.
 
-**Install Via NPM**
+**Installing with ECC**
 
-This requires both the sjcl library and the type library.
+In order to use the asymetric crypto features of the SJCL library you need to build the library at command line using the --with-ecc option for configure.  Directions for compiling.  This build depends on perl and java for make to work.
+
+In my instance I configured the build with options for `--with-ecc --with-srp`
+
+An important part of the `make test` step is it confirms witch options are enabled in the test ouput.
+
+**Installing**
+
+Running `npm install` from the project root should install the compiled version from `vendors/sjcl-ecc/` into node_modules/
+
+I'm unsure if sjcl types is helpful but have installed those via the following command:
 
 ```nodejs
-npm install sjcl @types/sjcl --save
+npm install @types/sjcl --save
 ```
 **Importing**
 

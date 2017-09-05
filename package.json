@@ -28,7 +28,7 @@
     "jquery": "^3.2.1",
     "keypair": "^1.0.1",
     "rxjs": "^5.4.2",
-    "sjcl": "^1.0.7",
+    "sjcl": "file:vendor/sjcl-ecc",
     "tether": "^1.4.0",
     "zone.js": "^0.8.17"
   },
