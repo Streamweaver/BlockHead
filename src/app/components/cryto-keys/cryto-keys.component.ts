@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as sjcl from 'sjcl';
 
-// Some examples of encoding
-/* Key examples and code pulled form sjcl wiki at
+/* Links to examples:
    https://github.com/bitwiseshiftleft/sjcl/wiki/Asymmetric-Crypto
+   http://blog.peramid.es/blog/2014/09/09/short-introduction-to-sjcl/
  */
 
 @Component({
@@ -13,31 +13,54 @@ import * as sjcl from 'sjcl';
 })
 export class CrytoKeysComponent implements OnInit {
   keyPair: any;
-  pubKey: string;
-  secKey: string;
+  pub: any;
+  sec: any;
+  serializedPub: string;
+  serializedSec: string;
+  msgOriginal: string;
+  msgEncrypted: any;
+  msgDecrypted: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.pubKey = 'Not Generated';
-    this.secKey = 'Not Generated';
+    this.serializedPub = 'Not Generated';
+    this.serializedSec = 'Not Generated';
   }
 
 
   clickNewKeypair() {
     const keyPair = sjcl.ecc.elGamal.generateKeys(256, 10);
-    const pub = keyPair.pub.get();
-    const sec = keyPair.sec.get();
-    this.pubKey = sjcl.codec.base64.fromBits(pub.x.concat(pub.y));
-    this.secKey = sjcl.codec.base64.fromBits(sec);
+    this.pub = keyPair.pub.get();
+    this.sec = keyPair.sec.get();
+    this.serializedPub = sjcl.codec.base64.fromBits(this.pub.x.concat(this.pub.y));
+    this.serializedSec = sjcl.codec.base64.fromBits(this.sec);
 
-  }
-
-  getPub() {
-    return this.keyPair.pub.get();
   }
 
   getSec() {
-    return this.keyPair.sec.get();
+    return this.sec.get();
+  }
+
+  doEncryptMsg() {
+    this.msgEncrypted = sjcl.encrypt(this.serializedPub, this.msgOriginal);
+  }
+
+  doDecryptMsg() {
+    return false;
   }
 }
+/* Not on encrypted output
+{
+"iv":"tjp81jkAzUpW1bI9gLDDpg==", // iv Base64 encoded
+"v":1,                           // version
+"iter":1000,                     // iteration count
+"ks":128,                        // key size in bits
+"ts":64,                         // authentication strength
+"mode":"ccm",                    // mode
+"adata":"xxx",                   // authenticated data
+"cipher":"aes",                  // cipher
+"salt":"lx06UoJDNys=",           // key derivation salt
+"ct":"Gv7ptKdTtUz6AGtX"          // ciphet text
+}
+ */

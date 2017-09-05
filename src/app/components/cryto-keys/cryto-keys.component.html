@@ -9,7 +9,7 @@
         Private Key (Secure)
       </div>
       <div class="card-text">
-        {{ secKey }}
+        {{ serializedSec }}
       </div>
     </div>
   </div>
@@ -19,8 +19,22 @@
         Public Key (Shared)
       </div>
       <div class="card-text">
-        {{ pubKey }}
+        {{ serializedPub }}
       </div>
     </div>
   </div>
+</div>
+<div class="form-group">
+  <label class="form-control-label">Original</label>
+  <textarea [(ngModel)]="msgOriginal" name="msgOriginal" #name="ngModel" class="form-text">{{msgOriginal}}</textarea>
+  <button class="btn btn-primary" (click)="doEncryptMsg()" [disabled]="serializedPub === null"><i class="fa fa-puzzle-piece"></i> Encrypt</button>
+</div>
+<div class="form-group">
+  <label class="form-control-label">Encrypted</label>
+  <textarea [(ngModel)]="msgEncrypted" name="ct" #name="ngModel" class="form-text">{{msgEncrypted}}</textarea>
+  <button class="btn btn-primary" (click)="doDecryptMsg()" [disabled]="msgEncrypted === null"><i class="fa fa-key"></i> Decrypt</button>
+</div>
+<div class="form-group">
+  <label class="form-control-label">Decrypted</label>
+  <textarea [(ngModel)]="msgDecrypted" name="msgDecrypted" #name="ngModel" class="form-text">{{msgDecrypted}}</textarea>
 </div>
