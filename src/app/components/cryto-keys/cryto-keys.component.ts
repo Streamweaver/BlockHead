@@ -22,6 +22,7 @@ import {
 export class CrytoKeysComponent implements OnInit {
   pubKey: string;
   secKey: string;
+  reKey: string;
 
   constructor() { }
 
@@ -29,12 +30,12 @@ export class CrytoKeysComponent implements OnInit {
 
   generateKeys() {
     const keyPair = sjcl.ecc.elGamal.generateKeys(256, 10);
-    this.serializePub(keyPair.pub);
-    this.serializeSec(keyPair.sec);
+    this.pubKey = this.serializePub(keyPair.pub);
+    this.secKey = this.serializeSec(keyPair.sec);
   }
 
-  serializePub(pub: SjclElGamalPublicKey) {
-    this.pubKey = sjcl.codec.base64.fromBits(pub.get().x.concat(pub.get().y));
+  serializePub(pub: SjclElGamalPublicKey): string {
+    return sjcl.codec.base64.fromBits(pub.get().x.concat(pub.get().y));
   }
 
   unSerializePub(pub: string): SjclElGamalPublicKey {
@@ -44,15 +45,20 @@ export class CrytoKeysComponent implements OnInit {
     );
   }
 
-  serializeSec(sec: SjclElGamalSecretKey) {
-    this.secKey = sjcl.codec.base64.fromBits(sec.get());
+  serializeSec(sec: SjclElGamalSecretKey): string {
+    return sjcl.codec.base64.fromBits(sec.get());
   }
 
   unSerializeSec(sec: string): SjclElGamalSecretKey {
     return new sjcl.ecc.elGamal.secretKey(
       sjcl.ecc.curves.c256,
-      sjcl.ecc.curves.c256.fields.fromBits(sjcl.codec.base64.toBits(sec))
+      sjcl.bn.fromBits(sjcl.codec.base64.toBits(sec))
     );
+  }
+
+  doRebuildKey() {
+    const sec = this.unSerializeSec(this.secKey);
+    this.reKey = sjcl.codec.base64.fromBits(sec.get());
   }
 }
 
