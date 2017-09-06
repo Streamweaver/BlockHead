@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import * as sjcl from 'sjcl';
+import {
+  BitArray, SjclElGamalPublicKey, SjclElGamalSecretKey, SjclEllipticalCurve,
+  SjclEllipticalCurveStatic
+} from 'sjcl';
+
 
 /* Links to examples:
    https://github.com/bitwiseshiftleft/sjcl/wiki/Asymmetric-Crypto
    http://blog.peramid.es/blog/2014/09/09/short-introduction-to-sjcl/
+
+   Type Defenitions:
+   https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/sjcl/index.d.ts
  */
 
 @Component({
@@ -12,55 +20,39 @@ import * as sjcl from 'sjcl';
   styleUrls: ['./cryto-keys.component.scss']
 })
 export class CrytoKeysComponent implements OnInit {
-  keyPair: any;
-  pub: any;
-  sec: any;
-  serializedPub: string;
-  serializedSec: string;
-  msgOriginal: string;
-  msgEncrypted: any;
-  msgDecrypted: string;
+  pubKey: string;
+  secKey: string;
 
   constructor() { }
 
-  ngOnInit() {
-    this.serializedPub = 'Not Generated';
-    this.serializedSec = 'Not Generated';
-  }
+  ngOnInit() {}
 
-
-  clickNewKeypair() {
+  generateKeys() {
     const keyPair = sjcl.ecc.elGamal.generateKeys(256, 10);
-    this.pub = keyPair.pub.get();
-    this.sec = keyPair.sec.get();
-    this.serializedPub = sjcl.codec.base64.fromBits(this.pub.x.concat(this.pub.y));
-    this.serializedSec = sjcl.codec.base64.fromBits(this.sec);
-
+    this.serializePub(keyPair.pub);
+    this.serializeSec(keyPair.sec);
   }
 
-  getSec() {
-    return this.sec.get();
+  serializePub(pub: SjclElGamalPublicKey) {
+    this.pubKey = sjcl.codec.base64.fromBits(pub.get().x.concat(pub.get().y));
   }
 
-  doEncryptMsg() {
-    this.msgEncrypted = sjcl.encrypt(this.serializedPub, this.msgOriginal);
+  unSerializePub(pub: string): SjclElGamalPublicKey {
+    return new sjcl.ecc.elGamal.publicKey(
+      sjcl.ecc.curves.c256,
+      sjcl.codec.base64.toBits(pub)
+    );
   }
 
-  doDecryptMsg() {
-    return false;
+  serializeSec(sec: SjclElGamalSecretKey) {
+    this.secKey = sjcl.codec.base64.fromBits(sec.get());
+  }
+
+  unSerializeSec(sec: string): SjclElGamalSecretKey {
+    return new sjcl.ecc.elGamal.secretKey(
+      sjcl.ecc.curves.c256,
+      sjcl.ecc.curves.c256.fields.fromBits(sjcl.codec.base64.toBits(sec))
+    );
   }
 }
-/* Not on encrypted output
-{
-"iv":"tjp81jkAzUpW1bI9gLDDpg==", // iv Base64 encoded
-"v":1,                           // version
-"iter":1000,                     // iteration count
-"ks":128,                        // key size in bits
-"ts":64,                         // authentication strength
-"mode":"ccm",                    // mode
-"adata":"xxx",                   // authenticated data
-"cipher":"aes",                  // cipher
-"salt":"lx06UoJDNys=",           // key derivation salt
-"ct":"Gv7ptKdTtUz6AGtX"          // ciphet text
-}
- */
+
